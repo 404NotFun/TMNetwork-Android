@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.util.LruCache;
 import android.widget.Toast;
@@ -60,6 +62,15 @@ public class TMNetwork {
                         cache.put(url, bitmap);
                     }
                 });
+    }
+
+    public boolean isConnectedNetworking(){
+        ConnectivityManager cm = (ConnectivityManager) mCtx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
     }
 
     public static synchronized TMNetwork getInstance(Context context) {
